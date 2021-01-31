@@ -26,49 +26,58 @@ public class MainGUI extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("PathFinder Visualizer");
-		VBox vbox = new VBox();
 		GridMaker gm = new GridMaker();
-		StackPane grid = gm.drawGrid();
 		
-		VBox vbox2 = new VBox();
-		HBox hbox = new HBox();
-		HBox hbox2 = new HBox();
+		
+		//setup containers
+		VBox root = new VBox(); //contains the grid and the first leftVbox
+		StackPane grid = gm.drawGrid();
+		VBox leftVbox = new VBox(); //contains both hBoxes
+		HBox buttonBox = new HBox(); //contains all buttons
+		HBox topHBox = new HBox(); //contains the algorithms
+		HBox botHBox = new HBox(); //contains the grid sizes
+		VBox rightVbox = new VBox();   //contains the start and reset buttons
+		
+		//setup components
 		Label alg = new Label("Algorithm: ");
-		Label size = new Label("Grid Size");
+		Label size = new Label("Grid Size:   ");
 		TextField x = new TextField();
 		TextField y = new TextField();
 		x.setPromptText("X value");
 		y.setPromptText("Y value");
 		Button setSize = new Button("Set Size");
+		Button start = new Button("Start");
+		Button stop = new Button("Reset");
 		MenuItem Astar = new MenuItem("A* Algorithm");
 		MenuItem Djikstra = new MenuItem("DJikstra");
 		MenuButton mbutton = new MenuButton("Choose an Algorithm...");
 		mbutton.getItems().add(Astar);
 		mbutton.getItems().add(Djikstra);
 		
-		//contains the buttons start and stop
-		Button start = new Button("Start");
-		Button stop = new Button("Reset");
-		VBox vbox3 = new VBox();
-		vbox3.setSpacing(5);
-		vbox3.getChildren().addAll(start, stop);
-		vbox3.setPadding(new Insets(0, 0, 0, width*0.7));
+		//edit containers
+		//root
+		root.setSpacing(30);
+		//buttonBox
+		buttonBox.setSpacing(width*0.45);
+		//rightVBox
+		rightVbox.setSpacing(10);
+		rightVbox.setPadding(new Insets(0, 0, 0, 30));
+		//topHBox
+		topHBox.setSpacing(15);
+		topHBox.setPadding(new Insets(0, 0, 0, 50));
+		//botHbox
+		botHBox.setSpacing(15);
+		botHBox.setPadding(new Insets(10, 0, 0, 50));
 		
+		//add components to containers
+		buttonBox.getChildren().addAll(leftVbox, rightVbox);
+		topHBox.getChildren().addAll(alg, mbutton);
+		botHBox.getChildren().addAll(size, x, y, setSize);
+		leftVbox.getChildren().addAll(topHBox, botHBox);
+		root.getChildren().addAll(grid, buttonBox);	
+		rightVbox.getChildren().addAll(start, stop);
 		
-		//contains the label and the menu
-		hbox.setSpacing(15);
-		hbox.setPadding(new Insets(60, 0, 0, 50));
-		hbox.getChildren().addAll(alg, mbutton, vbox3);
-		
-		hbox2.setSpacing(15);
-		hbox2.setPadding(new Insets(0, 0, 30, 50));
-		hbox2.getChildren().addAll(size, x, y, setSize);
-
-		vbox2.getChildren().addAll(hbox, hbox2);
-		vbox.setSpacing(30);
-		vbox.getChildren().addAll(grid, vbox2);
-		
-		Scene scene = new Scene(vbox);
+		Scene scene = new Scene(root);
 		scene.getStylesheets().add("application.css");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);;
