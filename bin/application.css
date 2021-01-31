@@ -8,3 +8,6 @@
 .cell-hover-highlight {
     -fx-background-color:derive(green,0.9);
 }
+.button {
+	-fx-padding: 8 35 8 35;
+}

@@ -1,5 +1,8 @@
 package grid;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -9,8 +12,9 @@ public class GridMaker{
 
 	int rows = 20;
 	int columns = 20;
-	double width = 800;
-	double height = 600;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	double width = screenSize.getWidth();
+	double height = screenSize.getHeight() - screenSize.getHeight()*0.2;
 	
 	public StackPane drawGrid() {
 		StackPane layout = new StackPane();
