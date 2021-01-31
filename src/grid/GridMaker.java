@@ -15,10 +15,10 @@ public class GridMaker{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight() - screenSize.getHeight()*0.2;
+	Grid grid = new Grid(rows, columns, width, height);
 	
 	public StackPane drawGrid() {
 		StackPane layout = new StackPane();
-		Grid grid = new Grid(rows, columns, width, height);
 		CellEvent event = new CellEvent();
 
 		for (int i = 0; i < rows; i++) {
@@ -31,5 +31,9 @@ public class GridMaker{
 
 		layout.getChildren().addAll(grid);
 		return layout;
+	}
+	
+	public Grid getGrid() {
+		return grid;
 	}
 }

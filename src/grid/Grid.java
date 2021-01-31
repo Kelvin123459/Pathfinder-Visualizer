@@ -33,4 +33,10 @@ public class Grid extends Pane {
         cell.setPrefHeight(prefHeight);
         getChildren().add(cell);
     }
+    
+    public Cell getCell(int column, int row) {
+        return cells[row][column];
+    }
+    
+    
 }

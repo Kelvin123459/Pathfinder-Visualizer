@@ -70,11 +70,11 @@ public class MainGUI extends Application{
 		botHBox.setPadding(new Insets(10, 0, 0, 50));
 		
 		//add components to containers
-		buttonBox.getChildren().addAll(leftVbox, rightVbox);
-		topHBox.getChildren().addAll(alg, mbutton);
-		botHBox.getChildren().addAll(size, x, y, setSize);
-		leftVbox.getChildren().addAll(topHBox, botHBox);
 		root.getChildren().addAll(grid, buttonBox);	
+		buttonBox.getChildren().addAll(leftVbox, rightVbox);
+		leftVbox.getChildren().addAll(topHBox, botHBox);
+			topHBox.getChildren().addAll(alg, mbutton);
+			botHBox.getChildren().addAll(size, x, y, setSize);
 		rightVbox.getChildren().addAll(start, stop);
 		
 		Scene scene = new Scene(root);

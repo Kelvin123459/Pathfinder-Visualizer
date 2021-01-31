@@ -55,7 +55,7 @@ public class CellEvent {
             node.hoverProperty().addListener(new ChangeListener<Boolean>(){
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    System.out.println( observable + ": " + newValue);
+                    System.out.println(observable + ": " + newValue);
                     if(newValue) {
                         ((Cell) node).hoverCell();
                     } 
