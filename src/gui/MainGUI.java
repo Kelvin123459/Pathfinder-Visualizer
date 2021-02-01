@@ -87,7 +87,7 @@ public class MainGUI extends Application{
 		primaryStage.show();
 		
 		Dijkstra algo = new Dijkstra();
-		algo.algorithm(new Vertex(0,0), new Vertex(4,4));
+		algo.algorithm(gm.getGrid().getCell(20,20).getVertex(), gm.getGrid().getCell(20, 50).getVertex(), gm.getGrid());
 	}
 
 }

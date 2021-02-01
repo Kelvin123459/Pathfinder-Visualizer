@@ -1,5 +1,5 @@
 .cell {
-    -fx-border-color: dodgerblue;
+    -fx-border-color: black;
     -fx-border-width: 1px;
 }
 .cell-highlight {
@@ -12,11 +12,14 @@
 	-fx-padding: 8 35 8 35;
 }
 .cell-adj {
-	 -fx-background-color:derive(red,0.9);	
+	 -fx-background-color:derive(rgb(0, 0, 255),0.9);	
 }
 .cell-path {
 	-fx-background-color:derive(purple,0.9);
 }
 .cell-visited {
-	-fx-background-color:derive(yellow,0.9);
+	-fx-background-color:derive(green,0.9);
+}
+.cell-goal {
+	-fx-background-color:derive(red,0.9);
 }

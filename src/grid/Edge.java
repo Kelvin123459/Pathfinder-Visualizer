@@ -8,7 +8,7 @@ public class Edge {
 		this.vertex = destination;
 		this.cost = d;
 	}
-	public Vertex getCell() {
+	public Vertex getVertex() {
 		return vertex;
 	}
     public double getCost() {
@@ -17,5 +17,8 @@ public class Edge {
     
     public void setCost(int cost) {
     	this.cost = cost;
+    }
+    public String toString() {
+    	return vertex.toString() + " " + cost;
     }
 }

@@ -2,20 +2,18 @@ package grid;
 
 import java.util.ArrayList;
 
-public class Vertex {
+public class Vertex implements Comparable<Vertex>{
 	
 	double distStart;
 	double cost; 
 	int[] position;
 	Vertex previous;
 	ArrayList<Edge> edges;
-	Cell cell;
 	GridMaker grid = new GridMaker();
 	
 	public Vertex(int x, int y) {
 		distStart = Double.POSITIVE_INFINITY;
 		position = new int[] {x,y};
-		cell = new Cell(x,y);
 		edges = new ArrayList<Edge>();
 	}
 	
@@ -48,7 +46,7 @@ public class Vertex {
 	}
 
 	public ArrayList<Edge> getEdges() {
-		return edges = grid.getGrid().adjacentCells(this);
+		return edges;
 	}
 
 	public void setEdges(ArrayList<Edge> edges) {
@@ -61,7 +59,7 @@ public class Vertex {
 	public String toString() {
 		return position[0] + "/" + position[1];
 	}
-	public Cell getCell() {
-		return cell;
+	public int compareTo(Vertex other){
+		return Double.compare(cost, other.cost);
 	}
 }

@@ -13,20 +13,29 @@ public class Dijkstra {
 	
 	PriorityQueue<Vertex> unvisited;
 	
-	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal){
+	public Dijkstra() {
+		unvisited = new PriorityQueue<Vertex>();
+	}
+	
+	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal, Grid grid){
 		ArrayList<Vertex> path = new ArrayList<>();
-		System.out.println(start.toString());
-		System.out.println(goal.toString());
-		GridMaker grid = new GridMaker();
-		Vertex current = start;
-//		System.out.println(current.getEdges());
-		while(current!=goal) {
+		start.setDistStart(0);
+		start.setCost(0);
+		unvisited.add(start);
+		Cell cell;
+		while(!unvisited.isEmpty()) {
+			Vertex current = unvisited.poll();
+			cell = grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]);
+			cell.markVisited();
+			if(current == goal) {
+				break;
+			}
 			for(Edge edge: current.getEdges()) {
-				System.out.println("here");
-				Vertex next = (Vertex) edge.getCell();
+				cell = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
+				Vertex next = cell.getVertex();
 				double distStart = current.getDistStart() + edge.getCost();
-				if(!grid.getGrid().getCell(next.getCoordinate()[0], next.getCoordinate()[1]).isVisited()) {
-					grid.getGrid().getCell(next.getCoordinate()[0], next.getCoordinate()[1]).markAdj();
+				if(!cell.isVisited()) {
+					cell.markAdj();
 				}
 				if(distStart<next.getDistStart()) {
 					unvisited.remove(next);
@@ -36,12 +45,17 @@ public class Dijkstra {
 					unvisited.add(next);
 				}
 			}
+//			System.out.println(unvisited.toString());
 		}
+		Vertex current = goal;
+		path.add(current);
+		grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markGoal();
 		while(current.getPrevious()!=null) {
 			path.add(current.getPrevious());
 			current = current.getPrevious();
-			grid.getGrid().getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markPath();
+			grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markPath();
 		}
+		System.out.println(path.toString());
 		return path;
 	}
 }

@@ -36,7 +36,7 @@ public class Grid extends Pane {
         getChildren().add(cell);
     }
     
-    public Cell getCell(int column, int row) {
+    public Cell getCell(int row, int column) {
         return cells[row][column];
     }
     
@@ -50,11 +50,11 @@ public class Grid extends Pane {
     		cell.addEdge(edge);
     		if(y!=0) {
     			edge = new Edge(new Vertex(x-1,y-1), cell.getCost()+1);
-        		edges.add(edge);
+    			cell.addEdge(edge);
         	}
     		if(y+1<rows) {
     			edge = new Edge(new Vertex(x-1,y+1), cell.getCost()+1);
-        		edges.add(edge);
+    			cell.addEdge(edge);
     		}
     	}
     	if(y!=0) {
@@ -62,23 +62,22 @@ public class Grid extends Pane {
     		cell.addEdge(edge);
     		if(x+1<columns) {
     			edge = new Edge(new Vertex(x+1,y-1), cell.getCost()+1);
-        		edges.add(edge);
+    			cell.addEdge(edge);
         	}
     	}
     	if(x+1<columns) {
     		edge = new Edge(new Vertex(x+1,y), cell.getCost()+1);
-    		edges.add(edge);
+    		cell.addEdge(edge);
     		
     		if(y+1<rows) {
     			edge = new Edge(new Vertex(x+1,y+1), cell.getCost()+1);
-        		edges.add(edge);
+    			cell.addEdge(edge);
     		}
     	}
     	if(y+1<rows) {
     		edge = new Edge(new Vertex(x,y+1), cell.getCost()+1);
-    		edges.add(edge);
+    		cell.addEdge(edge);
     	}
-    	System.out.println(edges.toString());
     	return edges;
     }
 	

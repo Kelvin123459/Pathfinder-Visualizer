@@ -12,12 +12,21 @@ public class Cell extends StackPane {
     int[] coordinates = new int[] {row,column};
     boolean colored = false;
     boolean visited = false;
+    Vertex vertex;
 
     public Cell(int row, int column) {
         this.row = row;
     	this.column = column;
         getStyleClass().add("cell");
         setOpacity(0.9);
+    }
+    
+    public void addVertex(Vertex vertex){
+    	this.vertex = vertex;
+    }
+    
+    public Vertex getVertex() {
+    	return vertex;
     }
 
     public void colorCell() {
@@ -41,6 +50,8 @@ public class Cell extends StackPane {
     }
     
     public void markVisited() {
+    	getStyleClass().clear();
+    	getStyleClass().add("cell");
     	getStyleClass().add("cell-visited");
     	visited = true;
     }
@@ -50,7 +61,13 @@ public class Cell extends StackPane {
     }
     
     public void markPath() {
+    	getStyleClass().clear();
+    	getStyleClass().add("cell");
     	getStyleClass().add("cell-path");
+    }
+    
+    public void markGoal() {
+    	getStyleClass().add("cell-goal");
     }
 
     public String toString() {
