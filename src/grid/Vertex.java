@@ -9,11 +9,14 @@ public class Vertex {
 	int[] position;
 	Vertex previous;
 	ArrayList<Edge> edges;
+	Cell cell;
+	GridMaker grid = new GridMaker();
 	
 	public Vertex(int x, int y) {
 		distStart = Double.POSITIVE_INFINITY;
-		edges = new ArrayList<Edge>();
 		position = new int[] {x,y};
+		cell = new Cell(x,y);
+		edges = new ArrayList<Edge>();
 	}
 	
 	public void addEdge(Edge edge) {
@@ -45,7 +48,7 @@ public class Vertex {
 	}
 
 	public ArrayList<Edge> getEdges() {
-		return edges;
+		return edges = grid.getGrid().adjacentCells(this);
 	}
 
 	public void setEdges(ArrayList<Edge> edges) {
@@ -55,44 +58,10 @@ public class Vertex {
 	public int[] getCoordinate() {
 		return position;
 	}
-	
-	public ArrayList<Edge> adjacentCells(int rows, int columns, Edge cell){
-    	ArrayList<Edge> adj = new ArrayList<Edge>();
-    	Edge edge;
-    	int x = cell.getCell().getCoordinate()[0];
-    	int y = cell.getCell().getCoordinate()[1];
-    	if(x!=0) {
-    		edge = new Edge(new Vertex(x-1,y), cell.getCost()+1);
-    		adj.add(edge);
-    		if(y!=0) {
-    			edge = new Edge(new Vertex(x-1,y-1), cell.getCost()+1);
-        		adj.add(edge);
-        	}
-    		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x-1,y+1), cell.getCost()+1);
-        		adj.add(edge);
-    		}
-    	}
-    	if(y!=0) {
-    		edge = new Edge(new Vertex(x,y-1), cell.getCost()+1);
-    		adj.add(edge);
-    		if(x+1<columns) {
-    			edge = new Edge(new Vertex(x+1,y-1), cell.getCost()+1);
-        		adj.add(edge);
-        	}
-    	}
-    	if(x+1<columns) {
-    		edge = new Edge(new Vertex(x+1,y), cell.getCost()+1);
-    		adj.add(edge);
-    		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x+1,y+1), cell.getCost()+1);
-        		adj.add(edge);
-    		}
-    	}
-    	if(y+1<rows) {
-    		edge = new Edge(new Vertex(x,y+1), cell.getCost()+1);
-    		adj.add(edge);
-    	}
-    	return adj;
-    }
+	public String toString() {
+		return position[0] + "/" + position[1];
+	}
+	public Cell getCell() {
+		return cell;
+	}
 }

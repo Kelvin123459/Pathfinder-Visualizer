@@ -2,16 +2,16 @@ package grid;
 
 public class Edge {
 	Vertex vertex;
-	int cost;
+	double cost;
 	
-	public Edge(Vertex destination, int cost) {
+	public Edge(Vertex destination, double d) {
 		this.vertex = destination;
-		this.cost = cost;
+		this.cost = d;
 	}
 	public Vertex getCell() {
 		return vertex;
 	}
-    public int getCost() {
+    public double getCost() {
     	return cost;
     }
     

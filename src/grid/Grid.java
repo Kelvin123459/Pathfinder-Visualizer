@@ -1,5 +1,7 @@
 package grid;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 
 public class Grid extends Pane {
@@ -38,5 +40,46 @@ public class Grid extends Pane {
         return cells[row][column];
     }
     
-    
+	public ArrayList<Edge> adjacentCells(Vertex cell){
+    	ArrayList<Edge> edges = new ArrayList<Edge>();
+		Edge edge;
+    	int x = cell.getCoordinate()[0];
+    	int y = cell.getCoordinate()[1];
+    	if(x!=0) {
+    		edge = new Edge(new Vertex(x-1,y), cell.getCost()+1);
+    		cell.addEdge(edge);
+    		if(y!=0) {
+    			edge = new Edge(new Vertex(x-1,y-1), cell.getCost()+1);
+        		edges.add(edge);
+        	}
+    		if(y+1<rows) {
+    			edge = new Edge(new Vertex(x-1,y+1), cell.getCost()+1);
+        		edges.add(edge);
+    		}
+    	}
+    	if(y!=0) {
+    		edge = new Edge(new Vertex(x,y-1), cell.getCost()+1);
+    		cell.addEdge(edge);
+    		if(x+1<columns) {
+    			edge = new Edge(new Vertex(x+1,y-1), cell.getCost()+1);
+        		edges.add(edge);
+        	}
+    	}
+    	if(x+1<columns) {
+    		edge = new Edge(new Vertex(x+1,y), cell.getCost()+1);
+    		edges.add(edge);
+    		
+    		if(y+1<rows) {
+    			edge = new Edge(new Vertex(x+1,y+1), cell.getCost()+1);
+        		edges.add(edge);
+    		}
+    	}
+    	if(y+1<rows) {
+    		edge = new Edge(new Vertex(x,y+1), cell.getCost()+1);
+    		edges.add(edge);
+    	}
+    	System.out.println(edges.toString());
+    	return edges;
+    }
+	
 }

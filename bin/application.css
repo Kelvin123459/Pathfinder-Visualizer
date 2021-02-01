@@ -11,3 +11,12 @@
 .button {
 	-fx-padding: 8 35 8 35;
 }
+.cell-adj {
+	 -fx-background-color:derive(red,0.9);	
+}
+.cell-path {
+	-fx-background-color:derive(purple,0.9);
+}
+.cell-visited {
+	-fx-background-color:derive(yellow,0.9);
+}

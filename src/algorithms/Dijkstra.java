@@ -13,14 +13,16 @@ public class Dijkstra {
 	
 	PriorityQueue<Vertex> unvisited;
 	
-	public ArrayList<Vertex> algorithm(Cell start, Cell goal){
+	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal){
 		ArrayList<Vertex> path = new ArrayList<>();
-		Vertex startV = new Vertex(start.getCoordinate()[0], start.getCoordinate()[1]);
-		Vertex goalV = new Vertex(goal.getCoordinate()[0], goal.getCoordinate()[1]);
+		System.out.println(start.toString());
+		System.out.println(goal.toString());
 		GridMaker grid = new GridMaker();
-		Vertex current = startV;
-		while(current!=goalV) {
+		Vertex current = start;
+//		System.out.println(current.getEdges());
+		while(current!=goal) {
 			for(Edge edge: current.getEdges()) {
+				System.out.println("here");
 				Vertex next = (Vertex) edge.getCell();
 				double distStart = current.getDistStart() + edge.getCost();
 				if(!grid.getGrid().getCell(next.getCoordinate()[0], next.getCoordinate()[1]).isVisited()) {

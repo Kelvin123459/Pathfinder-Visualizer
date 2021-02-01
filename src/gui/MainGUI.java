@@ -3,7 +3,9 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import algorithms.Dijkstra;
 import grid.GridMaker;
+import grid.Vertex;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -83,6 +85,9 @@ public class MainGUI extends Application{
 		primaryStage.setResizable(false);;
 		primaryStage.setMaximized(true);
 		primaryStage.show();
+		
+		Dijkstra algo = new Dijkstra();
+		algo.algorithm(new Vertex(0,0), new Vertex(4,4));
 	}
 
 }
