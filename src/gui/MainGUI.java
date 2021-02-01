@@ -7,6 +7,8 @@ import algorithms.Dijkstra;
 import grid.GridMaker;
 import grid.Vertex;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,12 +35,13 @@ public class MainGUI extends Application{
 		
 		//setup containers
 		VBox root = new VBox(); //contains the grid and the first leftVbox
-		StackPane grid = gm.drawGrid();
+		StackPane grid = gm.drawGrid(20, 20);
 		VBox leftVbox = new VBox(); //contains both hBoxes
 		HBox buttonBox = new HBox(); //contains all buttons
 		HBox topHBox = new HBox(); //contains the algorithms
 		HBox botHBox = new HBox(); //contains the grid sizes
 		VBox rightVbox = new VBox();   //contains the start and reset buttons
+		Scene scene = new Scene(root);
 		
 		//setup components
 		Label alg = new Label("Algorithm: ");
@@ -56,6 +59,30 @@ public class MainGUI extends Application{
 		mbutton.getItems().add(Astar);
 		mbutton.getItems().add(Djikstra);
 		
+		setSize.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(x.getText()!=null&&y.getText()!=null) {
+					int xInt = Integer.parseInt(x.getText());
+					int yInt = Integer.parseInt(y.getText());
+					VBox newRoot = new VBox();
+					StackPane newGrid = gm.drawGrid(xInt,yInt);
+					newRoot.getChildren().addAll(newGrid, buttonBox);	
+					primaryStage.getScene().setRoot(newRoot);
+				}
+			}
+		});
+		
+		start.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Dijkstra algo = new Dijkstra();
+				algo.algorithm(gm.getGrid().getCell(0,0).getVertex(), gm.getGrid().getCell(19,19).getVertex(), gm.getGrid());
+			}
+			
+		});
 		//edit containers
 		//root
 		root.setSpacing(30);
@@ -79,15 +106,13 @@ public class MainGUI extends Application{
 			botHBox.getChildren().addAll(size, x, y, setSize);
 		rightVbox.getChildren().addAll(start, stop);
 		
-		Scene scene = new Scene(root);
+		
 		scene.getStylesheets().add("application.css");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);;
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 		
-		Dijkstra algo = new Dijkstra();
-		algo.algorithm(gm.getGrid().getCell(20,20).getVertex(), gm.getGrid().getCell(20, 50).getVertex(), gm.getGrid());
 	}
 
 }

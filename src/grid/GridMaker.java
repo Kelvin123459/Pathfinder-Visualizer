@@ -10,21 +10,25 @@ import javafx.stage.Stage;
 
 public class GridMaker{
 
-	int rows = 60;
-	int columns = 60;
+	int rows;
+	int columns;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight() - screenSize.getHeight()*0.2;
-	Grid grid = new Grid(rows, columns, width, height);
+	Grid grid;
 	
-	public StackPane drawGrid() {
+	
+	public StackPane drawGrid(int row, int column) {
+		this.rows = row;
+		this.columns = column;
+		grid  = new Grid(rows, columns, width, height);
 		StackPane layout = new StackPane();
 		CellEvent event = new CellEvent();
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				Cell cell = new Cell(i, j);
-//				event.colorCell(cell);
+				event.colorCell(cell);
 				grid.addCell(cell, i, j);
 				Vertex vertex = new Vertex(i,j);
 				grid.adjacentCells(vertex);
