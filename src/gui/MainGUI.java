@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import algorithms.Dijkstra;
+import grid.Cell;
+import grid.CellEvent;
 import grid.GridMaker;
 import grid.Vertex;
 import javafx.application.Application;
@@ -26,6 +28,8 @@ public class MainGUI extends Application{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
+	int xInt = 20;
+	int yInt = 20;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -35,7 +39,7 @@ public class MainGUI extends Application{
 		
 		//setup containers
 		VBox root = new VBox(); //contains the grid and the first leftVbox
-		StackPane grid = gm.drawGrid(20, 20);
+		StackPane grid = gm.drawGrid(xInt, yInt);
 		VBox leftVbox = new VBox(); //contains both hBoxes
 		HBox buttonBox = new HBox(); //contains all buttons
 		HBox topHBox = new HBox(); //contains the algorithms
@@ -52,7 +56,7 @@ public class MainGUI extends Application{
 		y.setPromptText("Y value");
 		Button setSize = new Button("Set Size");
 		Button start = new Button("Start");
-		Button stop = new Button("Reset");
+		Button reset = new Button("Reset");
 		MenuItem Astar = new MenuItem("A* Algorithm");
 		MenuItem Djikstra = new MenuItem("DJikstra");
 		MenuButton mbutton = new MenuButton("Choose an Algorithm...");
@@ -64,8 +68,8 @@ public class MainGUI extends Application{
 			@Override
 			public void handle(ActionEvent event) {
 				if(x.getText()!=null&&y.getText()!=null) {
-					int xInt = Integer.parseInt(x.getText());
-					int yInt = Integer.parseInt(y.getText());
+					xInt = Integer.parseInt(x.getText());
+					yInt = Integer.parseInt(y.getText());
 					VBox newRoot = new VBox();
 					StackPane newGrid = gm.drawGrid(xInt,yInt);
 					newRoot.getChildren().addAll(newGrid, buttonBox);	
@@ -79,10 +83,24 @@ public class MainGUI extends Application{
 			@Override
 			public void handle(ActionEvent event) {
 				Dijkstra algo = new Dijkstra();
-				algo.algorithm(gm.getGrid().getCell(0,0).getVertex(), gm.getGrid().getCell(19,19).getVertex(), gm.getGrid());
+				CellEvent ce = gm.getCellEvent();
+				Cell starting = ce.getStart();
+				Cell ending = ce.getGoal();
+				algo.algorithm(starting.getVertex(), ending.getVertex(), gm.getGrid());
 			}
 			
 		});
+		
+		reset.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				VBox newRoot = new VBox();
+				StackPane newGrid = gm.drawGrid(xInt,yInt);
+				newRoot.getChildren().addAll(newGrid, buttonBox);	
+				primaryStage.getScene().setRoot(newRoot);
+			}
+		});
+		
 		//edit containers
 		//root
 		root.setSpacing(30);
@@ -104,8 +122,7 @@ public class MainGUI extends Application{
 		leftVbox.getChildren().addAll(topHBox, botHBox);
 			topHBox.getChildren().addAll(alg, mbutton);
 			botHBox.getChildren().addAll(size, x, y, setSize);
-		rightVbox.getChildren().addAll(start, stop);
-		
+		rightVbox.getChildren().addAll(start, reset);
 		
 		scene.getStylesheets().add("application.css");
 		primaryStage.setScene(scene);

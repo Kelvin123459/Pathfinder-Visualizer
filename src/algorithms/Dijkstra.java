@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import grid.Cell;
+import grid.CellEvent;
 import grid.Edge;
 import grid.Grid;
 import grid.GridMaker;
@@ -45,7 +46,6 @@ public class Dijkstra {
 					unvisited.add(next);
 				}
 			}
-//			System.out.println(unvisited.toString());
 		}
 		Vertex current = goal;
 		path.add(current);

@@ -10,14 +10,20 @@ import javafx.scene.input.PickResult;
 public class CellEvent {
 
 	boolean hover = true;
+	Cell start;
+	Cell goal;
 	
 	 EventHandler<MouseEvent> cellColorHandler = event -> {
 	        Cell cell = (Cell) event.getSource();
 	        if(event.isPrimaryButtonDown()) {
 	            cell.colorCell();
+	            System.out.println(cell.toString());
+                start = cell;
 	        } 
 	        else if(event.isSecondaryButtonDown()) {
-	            cell.uncolorCell();
+	            cell.colorCell();
+	            System.out.println(cell.toString());
+                goal = cell;
 	        }
 	    };
 
@@ -27,10 +33,11 @@ public class CellEvent {
 	        if(n instanceof Cell) {
 	            Cell cell = (Cell) n;
 	            if(event.isPrimaryButtonDown()) {
-	                cell.colorCell();
+	                cell.colorCell();    
 	            } 
 	            else if(event.isSecondaryButtonDown()) {
-	                cell.uncolorCell();
+	                cell.colorCell();
+	                
 	            }
 	        }
 	    };
@@ -70,5 +77,13 @@ public class CellEvent {
         node.setOnMousePressed(cellColorHandler);
         node.setOnDragDetected(dragHandler);
         node.setOnMouseDragEntered(dragEnterHandler);
+    }
+
+	public Cell getStart() {
+		return start;
+	}
+    
+    public Cell getGoal() {
+    		return goal;
     }
 }

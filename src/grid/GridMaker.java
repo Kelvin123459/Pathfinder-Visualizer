@@ -16,6 +16,7 @@ public class GridMaker{
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight() - screenSize.getHeight()*0.2;
 	Grid grid;
+	CellEvent event;
 	
 	
 	public StackPane drawGrid(int row, int column) {
@@ -23,7 +24,7 @@ public class GridMaker{
 		this.columns = column;
 		grid  = new Grid(rows, columns, width, height);
 		StackPane layout = new StackPane();
-		CellEvent event = new CellEvent();
+		event = new CellEvent();
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
@@ -42,5 +43,9 @@ public class GridMaker{
 	
 	public Grid getGrid() {
 		return grid;
+	}
+	
+	public CellEvent getCellEvent() {
+		return event;
 	}
 }
