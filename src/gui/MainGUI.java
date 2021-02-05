@@ -28,8 +28,8 @@ public class MainGUI extends Application{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
-	int xInt = 20;
-	int yInt = 20;
+	int xInt = 4;
+	int yInt = 4;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -86,7 +86,9 @@ public class MainGUI extends Application{
 				CellEvent ce = gm.getCellEvent();
 				Cell starting = ce.getStart();
 				Cell ending = ce.getGoal();
-				algo.algorithm(starting.getVertex(), ending.getVertex(), gm.getGrid());
+				if(starting!=null&&ending!=null) {
+					algo.algorithm(starting.getVertex(), ending.getVertex(), gm.getGrid());
+				}
 			}
 			
 		});

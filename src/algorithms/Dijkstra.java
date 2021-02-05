@@ -26,6 +26,7 @@ public class Dijkstra {
 		Cell cell;
 		while(!unvisited.isEmpty()) {
 			Vertex current = unvisited.poll();
+//			System.out.println(current.getEdges());
 			cell = grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]);
 			cell.markVisited();
 			if(current == goal) {
@@ -35,6 +36,7 @@ public class Dijkstra {
 				cell = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
 				Vertex next = cell.getVertex();
 				double distStart = current.getDistStart() + edge.getCost();
+				System.out.println(current.toString()+" "+ next.toString()+" "+next.getDistStart());
 				if(!cell.isVisited()) {
 					cell.markAdj();
 				}

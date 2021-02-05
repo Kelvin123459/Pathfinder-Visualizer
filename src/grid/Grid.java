@@ -11,6 +11,8 @@ public class Grid extends Pane {
 
     double width;
     double height;
+    double rH;
+    double cW;
 
     Cell[][] cells;
 
@@ -19,6 +21,8 @@ public class Grid extends Pane {
         this.rows = rows;
         this.width = width;
         this.height = height;
+        this.rH = height/rows;
+        this.cW = width/columns;
         cells = new Cell[rows][columns];
     }
 
@@ -40,45 +44,43 @@ public class Grid extends Pane {
         return cells[row][column];
     }
     
-	public ArrayList<Edge> adjacentCells(Vertex cell){
-    	ArrayList<Edge> edges = new ArrayList<Edge>();
+	public void adjacentCells(Vertex cell){
 		Edge edge;
     	int x = cell.getCoordinate()[0];
     	int y = cell.getCoordinate()[1];
-    	if(x!=0) {
-    		edge = new Edge(new Vertex(x-1,y), cell.getCost()+1);
+    	if(x-1>=0) {
+    		edge = new Edge(new Vertex(x-1,y), cW);
     		cell.addEdge(edge);
-    		if(y!=0) {
-    			edge = new Edge(new Vertex(x-1,y-1), cell.getCost()+1);
+    		if(y-1>=0) {
+    			edge = new Edge(new Vertex(x-1,y-1), rH*1.4);
     			cell.addEdge(edge);
         	}
     		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x-1,y+1), cell.getCost()+1);
+    			edge = new Edge(new Vertex(x-1,y+1), rH*1.4);
     			cell.addEdge(edge);
     		}
     	}
-    	if(y!=0) {
-    		edge = new Edge(new Vertex(x,y-1), cell.getCost()+1);
+    	if(y-1>=0) {
+    		edge = new Edge(new Vertex(x,y-1), rH);
     		cell.addEdge(edge);
     		if(x+1<columns) {
-    			edge = new Edge(new Vertex(x+1,y-1), cell.getCost()+1);
+    			edge = new Edge(new Vertex(x+1,y-1), rH*1.4);
     			cell.addEdge(edge);
         	}
     	}
     	if(x+1<columns) {
-    		edge = new Edge(new Vertex(x+1,y), cell.getCost()+1);
+    		edge = new Edge(new Vertex(x+1,y), rH);
     		cell.addEdge(edge);
     		
     		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x+1,y+1), cell.getCost()+1);
+    			edge = new Edge(new Vertex(x+1,y+1), rH*1.4);
     			cell.addEdge(edge);
     		}
     	}
     	if(y+1<rows) {
-    		edge = new Edge(new Vertex(x,y+1), cell.getCost()+1);
+    		edge = new Edge(new Vertex(x,y+1), cW);
     		cell.addEdge(edge);
     	}
-    	return edges;
     }
 	
 }
