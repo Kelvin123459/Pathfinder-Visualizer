@@ -36,7 +36,6 @@ public class Dijkstra {
 				cell = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
 				Vertex next = cell.getVertex();
 				double distStart = current.getDistStart() + edge.getCost();
-				System.out.println(current.toString()+" "+ next.toString()+" "+next.getDistStart());
 				if(!cell.isVisited()) {
 					cell.markAdj();
 				}
