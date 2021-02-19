@@ -25,42 +25,67 @@ public class Grid extends Pane{
     }
     
     public void addCell(Vertex vertex, int row, int column) {
-        Edge edge;
         int xPoint = vertex.getCoordinate()[0];
     	int yPoint = vertex.getCoordinate()[1];
+    	
+    	if(xPoint+1<rows) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint), cW));
+    	}
+    	if(yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint+1), rH));
+    	}
     	if(xPoint-1>=0) {
-    		edge = new Edge(new Vertex(xPoint-1,yPoint), cW);
-    		vertex.addEdge(edge);
-    		if(yPoint-1>=0) {
-    			edge = new Edge(new Vertex(xPoint-1,yPoint-1), rH*1.4);
-    			vertex.addEdge(edge);
-        	}
-    		if(yPoint+1<rows) {
-    			edge = new Edge(new Vertex(xPoint-1,yPoint+1), rH*1.4);
-    			vertex.addEdge(edge);
-    		}
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint), cW));
     	}
     	if(yPoint-1>=0) {
-    		edge = new Edge(new Vertex(xPoint,yPoint-1), rH);
-    		vertex.addEdge(edge);
-    		if(xPoint+1<columns) {
-    			edge = new Edge(new Vertex(xPoint+1,yPoint-1), rH*1.4);
-    			vertex.addEdge(edge);
-        	}
+    		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint-1), rH));
     	}
-    	if(xPoint+1<columns) {
-    		edge = new Edge(new Vertex(xPoint+1,yPoint), rH);
-    		vertex.addEdge(edge);
+    	if(xPoint+1<rows&&yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint+1), rH*1.4));
+    	}
+    	if(xPoint-1>=0&&yPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint-1), rH*1.4));
+    	}
+    	if(xPoint+1<rows&&yPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint-1), rH*1.4));
+    	}
+    	if(xPoint-1>=0&&yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint+1), rH*1.4));
+    	}
     		
-    		if(yPoint+1<rows) {
-    			edge = new Edge(new Vertex(xPoint+1,yPoint+1), rH*1.4);
-    			vertex.addEdge(edge);
-    		}
-    	}
-    	if(yPoint+1<rows) {
-    		edge = new Edge(new Vertex(xPoint,yPoint+1), cW);
-    		vertex.addEdge(edge);
-    	}
+//    	if(xPoint-1>=0) {
+//    		edge = new Edge(new Vertex(xPoint-1,yPoint), cW);
+//    		vertex.addEdge(edge);
+//    		if(yPoint-1>=0) {
+//    			edge = new Edge(new Vertex(xPoint-1,yPoint-1), rH*1.4);
+//    			vertex.addEdge(edge);
+//        	}
+//    		if(yPoint+1<rows) {
+//    			edge = new Edge(new Vertex(xPoint-1,yPoint+1), rH*1.4);
+//    			vertex.addEdge(edge);
+//    		}
+//    	}
+//    	if(yPoint-1>=0) {
+//    		edge = new Edge(new Vertex(xPoint,yPoint-1), rH);
+//    		vertex.addEdge(edge);
+//    		if(xPoint+1<columns) {
+//    			edge = new Edge(new Vertex(xPoint+1,yPoint-1), rH*1.4);
+//    			vertex.addEdge(edge);
+//        	}
+//    	}
+//    	if(xPoint+1<columns) {
+//    		edge = new Edge(new Vertex(xPoint+1,yPoint), rH);
+//    		vertex.addEdge(edge);
+//    		
+//    		if(yPoint+1<rows) {
+//    			edge = new Edge(new Vertex(xPoint+1,yPoint+1), rH*1.4);
+//    			vertex.addEdge(edge);
+//    		}
+//    	}
+//    	if(yPoint+1<rows) {
+//    		edge = new Edge(new Vertex(xPoint,yPoint+1), cW);
+//    		vertex.addEdge(edge);
+//    	}
     	
     	cells[row][column] = vertex;
         double prefWidth = width / columns;
