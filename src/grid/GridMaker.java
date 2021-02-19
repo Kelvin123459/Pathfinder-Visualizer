@@ -3,13 +3,9 @@ package grid;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-public class GridMaker{
-
+public class GridMaker {
 	int rows;
 	int columns;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -28,12 +24,9 @@ public class GridMaker{
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				Cell cell = new Cell(i, j);
-				event.colorCell(cell);
-				grid.addCell(cell, i, j);
-				Vertex vertex = new Vertex(i,j);
-				grid.adjacentCells(vertex);
-				cell.addVertex(vertex);
+				Vertex vertex = new Vertex(i, j);
+				event.colorCell(vertex);
+				grid.addCell(vertex, i, j);
 			}
 		}
 

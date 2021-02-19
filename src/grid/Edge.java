@@ -1,6 +1,9 @@
 package grid;
 
+import grid.Vertex;
+
 public class Edge {
+
 	Vertex vertex;
 	double cost;
 	
@@ -21,4 +24,5 @@ public class Edge {
     public String toString() {
     	return vertex.toString() + " " + cost;
     }
+    
 }

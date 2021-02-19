@@ -2,19 +2,24 @@ package grid;
 
 import java.util.ArrayList;
 
-public class Vertex implements Comparable<Vertex>{
+import javafx.scene.layout.StackPane;
+
+public class Vertex extends StackPane implements Comparable<Vertex>{
 	
 	double distStart;
 	double cost; 
 	int[] position;
 	Vertex previous;
+	boolean colored = false;
+    boolean visited = false;
 	ArrayList<Edge> edges;
-	GridMaker grid = new GridMaker();
 	
-	public Vertex(int x, int y) {
+	public Vertex(int row, int column) {
 		distStart = Double.POSITIVE_INFINITY;
-		position = new int[] {x,y};
+		position = new int[] {row,column};
 		edges = new ArrayList<Edge>();
+		getStyleClass().add("cell");
+        setOpacity(0.9);
 	}
 	
 	public void addEdge(Edge edge) {
@@ -62,4 +67,53 @@ public class Vertex implements Comparable<Vertex>{
 	public int compareTo(Vertex other){
 		return Double.compare(cost, other.cost);
 	}
+	
+	public boolean isColored() {
+    	return colored;
+    }
+    public boolean isVisited() {
+    	return visited;
+    }
+
+	public void colorCell() {
+        getStyleClass().remove("cell-highlight");
+        getStyleClass().add("cell-highlight");
+        colored = true;
+    }
+
+    public void uncolorCell() {
+        getStyleClass().remove("cell-highlight");
+        colored = false;
+    }
+
+    public void hoverCell() {
+        getStyleClass().remove("cell-hover-highlight");
+        getStyleClass().add("cell-hover-highlight");
+    }
+
+    public void unhoverCell() {
+        getStyleClass().remove("cell-hover-highlight");
+    }
+    
+    public void markVisited() {
+    	getStyleClass().clear();
+    	getStyleClass().add("cell");
+    	getStyleClass().add("cell-visited");
+    	visited = true;
+    }
+    
+    public void markAdj() {
+    	getStyleClass().add("cell-adj");
+    }
+    
+    public void markPath() {
+    	getStyleClass().clear();
+    	getStyleClass().add("cell");
+    	getStyleClass().add("cell-path");
+    }
+    
+    public void markGoal() {
+    	getStyleClass().add("cell-goal");
+    }
+
 }

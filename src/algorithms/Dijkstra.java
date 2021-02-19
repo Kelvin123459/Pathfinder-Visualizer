@@ -3,11 +3,11 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import newGrid.CellEvent;
-import newGrid.Edge;
-import newGrid.Grid;
-import newGrid.GridMaker;
-import newGrid.Vertex;
+import grid.CellEvent;
+import grid.Edge;
+import grid.Grid;
+import grid.GridMaker;
+import grid.Vertex;
 
 public class Dijkstra {
 	

@@ -10,11 +10,11 @@ import javafx.scene.input.PickResult;
 public class CellEvent {
 
 	boolean hover = true;
-	Cell start;
-	Cell goal;
+	Vertex start;
+	Vertex goal;
 
 	EventHandler<MouseEvent> cellColorHandler = event -> {
-		Cell cell = (Cell) event.getSource();
+		Vertex cell = (Vertex) event.getSource();
 		if(event.isPrimaryButtonDown()) {
 			if(start==null) {
 				cell.colorCell();
@@ -42,8 +42,8 @@ public class CellEvent {
 	EventHandler<MouseEvent> multiplePickHandler = event -> {
 		PickResult pickResult = event.getPickResult();
 		Node n = pickResult.getIntersectedNode();
-		if(n instanceof Cell) {
-			Cell cell = (Cell) n;
+		if(n instanceof Vertex) {
+			Vertex cell = (Vertex) n;
 			if(event.isPrimaryButtonDown()) {
 				cell.colorCell();    
 			} 
@@ -54,12 +54,12 @@ public class CellEvent {
 	};
 
 	EventHandler<MouseEvent> dragHandler = event -> {
-		Cell cell = (Cell) event.getSource();
+		Vertex cell = (Vertex) event.getSource();
 		cell.startFullDrag();
 	};
 
 	EventHandler<MouseEvent> dragEnterHandler = event -> {
-		Cell cell = (Cell) event.getSource();
+		Vertex cell = (Vertex) event.getSource();
 		if( event.isPrimaryButtonDown()) {
 			cell.colorCell();
 		} 
@@ -75,10 +75,10 @@ public class CellEvent {
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 					//                    System.out.println(observable + ": " + newValue);
 					if(newValue) {
-						((Cell) node).hoverCell();
+						((Vertex) node).hoverCell();
 					} 
 					else {
-						((Cell) node).unhoverCell();
+						((Vertex) node).unhoverCell();
 					}
 					//                    for(String s: node.getStyleClass())
 						//                        System.out.println(node + ": " + s);
@@ -90,11 +90,11 @@ public class CellEvent {
 		node.setOnMouseDragEntered(dragEnterHandler);
 	}
 
-	public Cell getStart() {
+	public Vertex getStart() {
 		return start;
 	}
 
-	public Cell getGoal() {
+	public Vertex getGoal() {
 		return goal;
 	}
 }

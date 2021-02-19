@@ -1,20 +1,17 @@
 package grid;
-
-import java.util.ArrayList;
-
 import javafx.scene.layout.Pane;
 
-public class Grid extends Pane {
-
-    int rows;
+public class Grid extends Pane{
+	int rows;
     int columns;
 
     double width;
     double height;
     double rH;
     double cW;
+    boolean searching;
 
-    Cell[][] cells;
+    Vertex[][] cells;
 
     public Grid(int rows, int columns, double width, double height) {
         this.columns = columns;
@@ -23,64 +20,55 @@ public class Grid extends Pane {
         this.height = height;
         this.rH = height/rows;
         this.cW = width/columns;
-        cells = new Cell[rows][columns];
+        searching = false;
+        cells = new Vertex[rows][columns];
     }
-
-    public void addCell(Cell cell, int row, int column) {
-        cells[row][column] = cell;
+    
+    public void addCell(Vertex vertex, int row, int column) {
+        int xPoint = vertex.getCoordinate()[0];
+    	int yPoint = vertex.getCoordinate()[1];
+    	
+    	if(xPoint+1<rows) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint), cW));
+    	}
+    	if(yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint+1), rH));
+    	}
+    	if(xPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint), cW));
+    	}
+    	if(yPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint-1), rH));
+    	}
+    	if(xPoint+1<rows&&yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint+1), rH*1.4));
+    	}
+    	if(xPoint-1>=0&&yPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint-1), rH*1.4));
+    	}
+    	if(xPoint+1<rows&&yPoint-1>=0) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint-1), rH*1.4));
+    	}
+    	if(xPoint-1>=0&&yPoint+1<columns) {
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint+1), rH*1.4));
+    	}
+    	
+    	cells[row][column] = vertex;
         double prefWidth = width / columns;
         double prefHeight = height / rows;
         double x = prefWidth * column;
         double y = prefHeight * row;
 
-        cell.setLayoutX(x);
-        cell.setLayoutY(y);
-        cell.setPrefWidth(prefWidth);
-        cell.setPrefHeight(prefHeight);
-        getChildren().add(cell);
+        vertex.setLayoutX(x);
+        vertex.setLayoutY(y);
+        vertex.setPrefWidth(prefWidth);
+        vertex.setPrefHeight(prefHeight);
+        
+        getChildren().add(vertex);
     }
     
-    public Cell getCell(int row, int column) {
+    public Vertex getCell(int row, int column) {
         return cells[row][column];
     }
     
-	public void adjacentCells(Vertex cell){
-		Edge edge;
-    	int x = cell.getCoordinate()[0];
-    	int y = cell.getCoordinate()[1];
-    	if(x-1>=0) {
-    		edge = new Edge(new Vertex(x-1,y), cW);
-    		cell.addEdge(edge);
-    		if(y-1>=0) {
-    			edge = new Edge(new Vertex(x-1,y-1), rH*1.4);
-    			cell.addEdge(edge);
-        	}
-    		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x-1,y+1), rH*1.4);
-    			cell.addEdge(edge);
-    		}
-    	}
-    	if(y-1>=0) {
-    		edge = new Edge(new Vertex(x,y-1), rH);
-    		cell.addEdge(edge);
-    		if(x+1<columns) {
-    			edge = new Edge(new Vertex(x+1,y-1), rH*1.4);
-    			cell.addEdge(edge);
-        	}
-    	}
-    	if(x+1<columns) {
-    		edge = new Edge(new Vertex(x+1,y), rH);
-    		cell.addEdge(edge);
-    		
-    		if(y+1<rows) {
-    			edge = new Edge(new Vertex(x+1,y+1), rH*1.4);
-    			cell.addEdge(edge);
-    		}
-    	}
-    	if(y+1<rows) {
-    		edge = new Edge(new Vertex(x,y+1), cW);
-    		cell.addEdge(edge);
-    	}
-    }
-	
 }

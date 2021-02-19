@@ -4,9 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import algorithms.Dijkstra;
-import newGrid.CellEvent;
-import newGrid.GridMaker;
-import newGrid.Vertex;
+import grid.CellEvent;
+import grid.GridMaker;
+import grid.Vertex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
