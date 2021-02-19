@@ -3,12 +3,11 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import grid.Cell;
-import grid.CellEvent;
-import grid.Edge;
-import grid.Grid;
-import grid.GridMaker;
-import grid.Vertex;
+import newGrid.CellEvent;
+import newGrid.Edge;
+import newGrid.Grid;
+import newGrid.GridMaker;
+import newGrid.Vertex;
 
 public class Dijkstra {
 	
@@ -23,7 +22,7 @@ public class Dijkstra {
 		start.setDistStart(0);
 		start.setCost(0);
 		unvisited.add(start);
-		Cell cell;
+		Vertex cell;
 		while(!unvisited.isEmpty()) {
 			Vertex current = unvisited.poll();
 //			System.out.println(current.getEdges());
@@ -34,7 +33,7 @@ public class Dijkstra {
 			}
 			for(Edge edge: current.getEdges()) {
 				cell = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
-				Vertex next = cell.getVertex();
+				Vertex next = cell;
 				double distStart = current.getDistStart() + edge.getCost();
 				if(!cell.isVisited()) {
 					cell.markAdj();

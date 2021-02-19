@@ -4,10 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import algorithms.Dijkstra;
-import grid.Cell;
-import grid.CellEvent;
-import grid.GridMaker;
-import grid.Vertex;
+import newGrid.CellEvent;
+import newGrid.GridMaker;
+import newGrid.Vertex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -84,10 +83,10 @@ public class MainGUI extends Application{
 			public void handle(ActionEvent event) {
 				Dijkstra algo = new Dijkstra();
 				CellEvent ce = gm.getCellEvent();
-				Cell starting = ce.getStart();
-				Cell ending = ce.getGoal();
+				Vertex starting = ce.getStart();
+				Vertex ending = ce.getGoal();
 				if(starting!=null&&ending!=null) {
-					algo.algorithm(starting.getVertex(), ending.getVertex(), gm.getGrid());
+					algo.algorithm(starting, ending, gm.getGrid());
 				}
 			}
 			
