@@ -3,42 +3,48 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import grid.CellEvent;
 import grid.Edge;
 import grid.Grid;
-import grid.GridMaker;
 import grid.Vertex;
 
-public class Dijkstra {
-	
+public class AStar {
 	PriorityQueue<Vertex> unvisited;
+	ArrayList<Vertex> visited;
 	
-	public Dijkstra() {
+	public AStar(){
 		unvisited = new PriorityQueue<Vertex>();
+		visited = new ArrayList<Vertex>();
 	}
 	
 	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal, Grid grid){
 		ArrayList<Vertex> path = new ArrayList<>();
 		start.setDistStart(0);
-		start.setCost(0);
+		double distance = calculateDist(start, goal);
+		start.setCost((int)distance);
 		unvisited.add(start);
 		while(!unvisited.isEmpty()) {
 			Vertex current = unvisited.poll();
 			current.markVisited();
+			if(current==start) {
+				visited.add(current);
+			}
 			if(current == goal) {
 				break;
 			}
 			for(Edge edge: current.getEdges()) {
 				Vertex next = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
-				System.out.println(next.toString());
-				double distStart = current.getDistStart() + edge.getCost();
+				if(visited.contains(next)) {
+					continue;
+				}
+				double distStart = current.getDistStart()+edge.getCost();
+				double distGoal = calculateDist(next, goal);
+				double estimate = distStart+distGoal;
 				if(!next.isVisited()) {
 					next.markAdj();
 				}
-				if(distStart<next.getDistStart()) {
-					unvisited.remove(next);
+				if(!unvisited.contains(next)||distStart<next.getDistStart()) {
 					next.setDistStart(distStart);
-					next.setCost((int)distStart);
+					next.setCost((int)estimate);
 					next.setPrevious(current);
 					unvisited.add(next);
 				}
@@ -54,5 +60,14 @@ public class Dijkstra {
 		}
 		System.out.println(path.toString());
 		return path;
+	}
+	
+	double calculateDist(Vertex start, Vertex goal){
+		double x1 = start.getCoordinate()[0];
+		double y1 = start.getCoordinate()[1];
+		double x2 = goal.getCoordinate()[0];
+		double y2 = goal.getCoordinate()[1];
+		double distance = Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+		return distance;
 	}
 }

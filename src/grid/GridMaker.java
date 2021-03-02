@@ -11,6 +11,8 @@ public class GridMaker {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight() - screenSize.getHeight()*0.2;
+	int rH = (int) (height/rows);
+    int cW = (int) (width/columns);
 	Grid grid;
 	CellEvent event;
 	

@@ -3,6 +3,7 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import algorithms.AStar;
 import algorithms.Dijkstra;
 import grid.CellEvent;
 import grid.GridMaker;
@@ -13,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -27,8 +29,9 @@ public class MainGUI extends Application{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
-	int xInt = 4;
-	int yInt = 4;
+	int xInt = 20;
+	int yInt = 20;
+	String selected;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -56,11 +59,11 @@ public class MainGUI extends Application{
 		Button setSize = new Button("Set Size");
 		Button start = new Button("Start");
 		Button reset = new Button("Reset");
-		MenuItem Astar = new MenuItem("A* Algorithm");
-		MenuItem Djikstra = new MenuItem("DJikstra");
-		MenuButton mbutton = new MenuButton("Choose an Algorithm...");
-		mbutton.getItems().add(Astar);
-		mbutton.getItems().add(Djikstra);
+		ChoiceBox<String> algorithms = new ChoiceBox<>();
+		algorithms.getItems().add("A* Algorithm");
+		algorithms.getItems().add("Dijkstra's Algorithm");
+		algorithms.setValue("A* Algorithm");
+		
 		
 		setSize.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -81,13 +84,28 @@ public class MainGUI extends Application{
 
 			@Override
 			public void handle(ActionEvent event) {
-				Dijkstra algo = new Dijkstra();
-				CellEvent ce = gm.getCellEvent();
-				Vertex starting = ce.getStart();
-				Vertex ending = ce.getGoal();
-				if(starting!=null&&ending!=null) {
-					algo.algorithm(starting, ending, gm.getGrid());
+				getChoice(algorithms);
+				if(selected == "A* Algorithm") {
+					AStar algo = new AStar();
+					System.out.println("AStar used");
+					CellEvent ce = gm.getCellEvent();
+					Vertex starting = ce.getStart();
+					Vertex ending = ce.getGoal();
+					if(starting!=null&&ending!=null) {
+						algo.algorithm(starting, ending, gm.getGrid());
+					}
 				}
+				else if (selected == "Dijkstra's Algorithm"){
+					Dijkstra algo = new Dijkstra();
+					System.out.println("Dijkstra used");
+					CellEvent ce = gm.getCellEvent();
+					Vertex starting = ce.getStart();
+					Vertex ending = ce.getGoal();
+					if(starting!=null&&ending!=null) {
+						algo.algorithm(starting, ending, gm.getGrid());
+					}
+				}
+				
 			}
 			
 		});
@@ -121,7 +139,7 @@ public class MainGUI extends Application{
 		root.getChildren().addAll(grid, buttonBox);	
 		buttonBox.getChildren().addAll(leftVbox, rightVbox);
 		leftVbox.getChildren().addAll(topHBox, botHBox);
-			topHBox.getChildren().addAll(alg, mbutton);
+			topHBox.getChildren().addAll(alg, algorithms);
 			botHBox.getChildren().addAll(size, x, y, setSize);
 		rightVbox.getChildren().addAll(start, reset);
 		
@@ -133,4 +151,7 @@ public class MainGUI extends Application{
 		
 	}
 
+	private void getChoice(ChoiceBox<String> choiceBox) {
+		selected = choiceBox.getValue();
+	}
 }

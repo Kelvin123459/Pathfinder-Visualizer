@@ -2,13 +2,12 @@ package grid;
 import javafx.scene.layout.Pane;
 
 public class Grid extends Pane{
-	int rows;
-    int columns;
+	double rows;
+    double columns;
 
     double width;
     double height;
-    double rH;
-    double cW;
+    int rH;
     boolean searching;
 
     Vertex[][] cells;
@@ -18,8 +17,7 @@ public class Grid extends Pane{
         this.rows = rows;
         this.width = width;
         this.height = height;
-        this.rH = height/rows;
-        this.cW = width/columns;
+        this.rH = (int)height/rows;
         searching = false;
         cells = new Vertex[rows][columns];
     }
@@ -27,15 +25,15 @@ public class Grid extends Pane{
     public void addCell(Vertex vertex, int row, int column) {
         int xPoint = vertex.getCoordinate()[0];
     	int yPoint = vertex.getCoordinate()[1];
-    	
+       	
     	if(xPoint+1<rows) {
-    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint), cW));
+    		vertex.addEdge(new Edge(new Vertex(xPoint+1,yPoint), rH));
     	}
     	if(yPoint+1<columns) {
     		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint+1), rH));
     	}
     	if(xPoint-1>=0) {
-    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint), cW));
+    		vertex.addEdge(new Edge(new Vertex(xPoint-1,yPoint), rH));
     	}
     	if(yPoint-1>=0) {
     		vertex.addEdge(new Edge(new Vertex(xPoint,yPoint-1), rH));
