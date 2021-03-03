@@ -28,45 +28,45 @@ public class CellEvent {
 		} 
 		else if(event.isSecondaryButtonDown()) {
 			if(goal==null) {
-				cell.colorCell();
+				cell.markGoal();
 				goal = cell;
 			}
 			else {
-				goal.uncolorCell();
+				goal.unmarkGoal();
 				goal = cell;
-				cell.colorCell();
+				cell.markGoal();
 			}
 		}
 	};
 
-	EventHandler<MouseEvent> multiplePickHandler = event -> {
-		PickResult pickResult = event.getPickResult();
-		Node n = pickResult.getIntersectedNode();
-		if(n instanceof Vertex) {
-			Vertex cell = (Vertex) n;
-			if(event.isPrimaryButtonDown()) {
-				cell.colorCell();    
-			} 
-			else if(event.isSecondaryButtonDown()) {
-				cell.colorCell();      
-			}
-		}
-	};
+//	EventHandler<MouseEvent> multiplePickHandler = event -> {
+//		PickResult pickResult = event.getPickResult();
+//		Node n = pickResult.getIntersectedNode();
+//		if(n instanceof Vertex) {
+//			Vertex cell = (Vertex) n;
+//			if(event.isPrimaryButtonDown()) {
+//				cell.colorCell();    
+//			} 
+//			else if(event.isSecondaryButtonDown()) {
+//				cell.colorCell();      
+//			}
+//		}
+//	};
 
-	EventHandler<MouseEvent> dragHandler = event -> {
-		Vertex cell = (Vertex) event.getSource();
-		cell.startFullDrag();
-	};
-
-	EventHandler<MouseEvent> dragEnterHandler = event -> {
-		Vertex cell = (Vertex) event.getSource();
-		if( event.isPrimaryButtonDown()) {
-			cell.colorCell();
-		} 
-		else if( event.isSecondaryButtonDown()) {
-			cell.uncolorCell();
-		}
-	};
+//	EventHandler<MouseEvent> dragHandler = event -> {
+//		Vertex cell = (Vertex) event.getSource();
+//		cell.startFullDrag();
+//	};
+//
+//	EventHandler<MouseEvent> dragEnterHandler = event -> {
+//		Vertex cell = (Vertex) event.getSource();
+//		if( event.isPrimaryButtonDown()) {
+//			cell.colorCell();
+//		} 
+//		else if( event.isSecondaryButtonDown()) {
+//			cell.uncolorCell();
+//		}
+//	};
 
 	public void colorCell(Node node) {
 		if(hover) {
@@ -86,8 +86,8 @@ public class CellEvent {
 			});
 		}
 		node.setOnMousePressed(cellColorHandler);
-		node.setOnDragDetected(dragHandler);
-		node.setOnMouseDragEntered(dragEnterHandler);
+//		node.setOnDragDetected(dragHandler);
+//		node.setOnMouseDragEntered(dragEnterHandler);
 	}
 
 	public Vertex getStart() {

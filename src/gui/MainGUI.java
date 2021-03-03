@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import algorithms.AStar;
+import algorithms.BFS;
 import algorithms.Dijkstra;
 import grid.CellEvent;
 import grid.GridMaker;
@@ -62,6 +63,7 @@ public class MainGUI extends Application{
 		ChoiceBox<String> algorithms = new ChoiceBox<>();
 		algorithms.getItems().add("A* Algorithm");
 		algorithms.getItems().add("Dijkstra's Algorithm");
+		algorithms.getItems().add("Breadth First Search Algorithm");
 		algorithms.setValue("A* Algorithm");
 		
 		
@@ -73,6 +75,7 @@ public class MainGUI extends Application{
 					xInt = Integer.parseInt(x.getText());
 					yInt = Integer.parseInt(y.getText());
 					VBox newRoot = new VBox();
+					newRoot.setSpacing(30);
 					StackPane newGrid = gm.drawGrid(xInt,yInt);
 					newRoot.getChildren().addAll(newGrid, buttonBox);	
 					primaryStage.getScene().setRoot(newRoot);
@@ -105,6 +108,16 @@ public class MainGUI extends Application{
 						algo.algorithm(starting, ending, gm.getGrid());
 					}
 				}
+				else if (selected == "Breadth First Search Algorithm") {
+					BFS algo = new BFS();
+					System.out.println("BFS used");
+					CellEvent ce = gm.getCellEvent();
+					Vertex starting = ce.getStart();
+					Vertex ending = ce.getGoal();
+					if(starting!=null&&ending!=null) {
+						algo.algorithm(starting, ending, gm.getGrid());
+					}
+				}
 				
 			}
 			
@@ -114,6 +127,7 @@ public class MainGUI extends Application{
 			@Override
 			public void handle(ActionEvent event) {
 				VBox newRoot = new VBox();
+				newRoot.setSpacing(30);
 				StackPane newGrid = gm.drawGrid(xInt,yInt);
 				newRoot.getChildren().addAll(newGrid, buttonBox);	
 				primaryStage.getScene().setRoot(newRoot);

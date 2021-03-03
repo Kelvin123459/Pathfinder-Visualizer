@@ -113,7 +113,16 @@ public class Vertex extends StackPane implements Comparable<Vertex>{
     }
     
     public void markGoal() {
+        getStyleClass().remove("cell-goal");
     	getStyleClass().add("cell-goal");
     }
+    
+    public void unmarkGoal() {
+        getStyleClass().remove("cell-goal");
+    }
 
+    public void markStart() {
+        getStyleClass().remove("cell-start");
+    	getStyleClass().add("cell-start");
+    }
 }

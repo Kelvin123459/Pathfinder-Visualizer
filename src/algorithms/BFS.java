@@ -1,29 +1,30 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 import grid.Edge;
 import grid.Grid;
 import grid.Vertex;
 
-public class AStar {
-	PriorityQueue<Vertex> unvisited;
+public class BFS {
+	Queue<Vertex> unvisited;
 	ArrayList<Vertex> visited;
 	
-	public AStar(){
-		unvisited = new PriorityQueue<Vertex>();
+	public BFS(){
+		unvisited = new LinkedList<Vertex>();
 		visited = new ArrayList<Vertex>();
 	}
 	
 	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal, Grid grid){
 		ArrayList<Vertex> path = new ArrayList<>();
 		start.setDistStart(0);
-		double distance = calculateDist(start, goal);
-		start.setCost((int)distance);
+		start.setCost(0);
 		unvisited.add(start);
 		while(!unvisited.isEmpty()) {
-			Vertex current = unvisited.poll();
+			Vertex current = unvisited.remove();
 			current.markVisited();
 			visited.add(current);
 			if(current == goal) {
@@ -31,20 +32,15 @@ public class AStar {
 			}
 			for(Edge edge: current.getEdges()) {
 				Vertex next = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
-				if(visited.contains(next)) {
-					continue;
-				}
-				double distStart = current.getDistStart()+edge.getCost();
-				double distGoal = calculateDist(next, goal);
-				double estimate = distStart+distGoal;
 				if(!next.isVisited()) {
 					next.markAdj();
-				}
-				if(!unvisited.contains(next)||distStart<next.getDistStart()) {
-					next.setDistStart(distStart);
-					next.setCost((int)estimate);
-					next.setPrevious(current);
-					unvisited.add(next);
+					if(!unvisited.contains(next)) {
+						unvisited.add(next);
+						next.setPrevious(current);
+						double distStart = current.getDistStart() + edge.getCost();
+						next.setDistStart(distStart);
+						next.setCost((int)distStart);
+					}
 				}
 			}
 		}
@@ -61,14 +57,5 @@ public class AStar {
 		}
 		System.out.println(path.toString());
 		return path;
-	}
-	
-	double calculateDist(Vertex start, Vertex goal){
-		double x1 = start.getCoordinate()[0];
-		double y1 = start.getCoordinate()[1];
-		double x2 = goal.getCoordinate()[0];
-		double y2 = goal.getCoordinate()[1];
-		double distance = Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-		return distance;
 	}
 }

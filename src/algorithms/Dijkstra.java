@@ -30,7 +30,6 @@ public class Dijkstra {
 			}
 			for(Edge edge: current.getEdges()) {
 				Vertex next = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
-				System.out.println(next.toString());
 				double distStart = current.getDistStart() + edge.getCost();
 				if(!next.isVisited()) {
 					next.markAdj();
@@ -51,6 +50,9 @@ public class Dijkstra {
 			path.add(current.getPrevious());
 			current = current.getPrevious();
 			grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markPath();
+			if(current.getPrevious()==null) {
+				grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markStart();
+			}
 		}
 		System.out.println(path.toString());
 		return path;
