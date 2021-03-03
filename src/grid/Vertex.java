@@ -34,7 +34,7 @@ public class Vertex extends StackPane implements Comparable<Vertex>{
 		this.distStart = distStart;
 	}
 
-	public double getCost() {
+	public int getCost() {
 		return cost;
 	}
 

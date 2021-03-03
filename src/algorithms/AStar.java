@@ -25,9 +25,7 @@ public class AStar {
 		while(!unvisited.isEmpty()) {
 			Vertex current = unvisited.poll();
 			current.markVisited();
-			if(current==start) {
-				visited.add(current);
-			}
+			visited.add(current);
 			if(current == goal) {
 				break;
 			}
