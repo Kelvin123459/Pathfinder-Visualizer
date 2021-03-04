@@ -5,7 +5,9 @@ import java.awt.Toolkit;
 
 import algorithms.AStar;
 import algorithms.BFS;
+import algorithms.DFS;
 import algorithms.Dijkstra;
+import algorithms.GBFS;
 import grid.CellEvent;
 import grid.GridMaker;
 import grid.Vertex;
@@ -17,8 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -64,6 +64,8 @@ public class MainGUI extends Application{
 		algorithms.getItems().add("A* Algorithm");
 		algorithms.getItems().add("Dijkstra's Algorithm");
 		algorithms.getItems().add("Breadth First Search Algorithm");
+		algorithms.getItems().add("Depth First Search Algorithm");
+		algorithms.getItems().add("Greedy Best First Search Algorithm");
 		algorithms.setValue("A* Algorithm");
 		
 		
@@ -111,6 +113,26 @@ public class MainGUI extends Application{
 				else if (selected == "Breadth First Search Algorithm") {
 					BFS algo = new BFS();
 					System.out.println("BFS used");
+					CellEvent ce = gm.getCellEvent();
+					Vertex starting = ce.getStart();
+					Vertex ending = ce.getGoal();
+					if(starting!=null&&ending!=null) {
+						algo.algorithm(starting, ending, gm.getGrid());
+					}
+				}
+				else if (selected == "Depth First Search Algorithm") {
+					DFS algo = new DFS();
+					System.out.println("DFS used");
+					CellEvent ce = gm.getCellEvent();
+					Vertex starting = ce.getStart();
+					Vertex ending = ce.getGoal();
+					if(starting!=null&&ending!=null) {
+						algo.algorithm(starting, ending, gm.getGrid());
+					}
+				}
+				else if (selected == "Greedy Best First Search Algorithm") {
+					GBFS algo = new GBFS();
+					System.out.println("GBFS used");
 					CellEvent ce = gm.getCellEvent();
 					Vertex starting = ce.getStart();
 					Vertex ending = ce.getGoal();

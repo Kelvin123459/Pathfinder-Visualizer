@@ -2,15 +2,16 @@ package algorithms;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+
 import grid.Edge;
 import grid.Grid;
 import grid.Vertex;
 
-public class AStar {
+public class GBFS {
 	PriorityQueue<Vertex> unvisited;
 	ArrayList<Vertex> visited;
 	
-	public AStar(){
+	public GBFS(){
 		unvisited = new PriorityQueue<Vertex>();
 		visited = new ArrayList<Vertex>();
 	}
@@ -21,6 +22,7 @@ public class AStar {
 		double distance = calculateDist(start, goal);
 		start.setCost((int)distance);
 		unvisited.add(start);
+		Vertex min = start;
 		while(!unvisited.isEmpty()) {
 			Vertex current = unvisited.poll();
 			current.markVisited();
@@ -33,19 +35,17 @@ public class AStar {
 				if(visited.contains(next)) {
 					continue;
 				}
-				double distStart = current.getDistStart()+edge.getCost();
 				double distGoal = calculateDist(next, goal);
-				double estimate = distStart+distGoal;
 				if(!next.isVisited()) {
 					next.markAdj();
 				}
-				if(!unvisited.contains(next)||distStart<next.getDistStart()) {
-					next.setDistStart(distStart);
-					next.setCost((int)estimate);
-					next.setPrevious(current);
-					unvisited.add(next);
+				if(distGoal<min.getCost()) {
+					next.setCost(distGoal);
+					min = next;
 				}
-			}
+			}	
+			min.setPrevious(current);
+			unvisited.add(min);
 		}
 		Vertex current = goal;
 		path.add(current);

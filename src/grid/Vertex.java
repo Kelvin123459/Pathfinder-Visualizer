@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 public class Vertex extends StackPane implements Comparable<Vertex>{
 	
 	double distStart;
-	int cost; 
+	double cost; 
 	int[] position;
 	Vertex previous;
 	boolean colored = false;
@@ -34,12 +34,12 @@ public class Vertex extends StackPane implements Comparable<Vertex>{
 		this.distStart = distStart;
 	}
 
-	public int getCost() {
+	public double getCost() {
 		return cost;
 	}
 
-	public void setCost(int cost) {
-		this.cost = cost;
+	public void setCost(double distGoal) {
+		this.cost = distGoal;
 	}
 
 	public Vertex getPrevious() {
