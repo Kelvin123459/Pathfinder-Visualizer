@@ -9,59 +9,72 @@ import grid.Vertex;
 public class AStar {
 	PriorityQueue<Vertex> unvisited;
 	ArrayList<Vertex> visited;
-	
+
 	public AStar(){
 		unvisited = new PriorityQueue<Vertex>();
 		visited = new ArrayList<Vertex>();
 	}
-	
+
 	public ArrayList<Vertex> algorithm(Vertex start, Vertex goal, Grid grid){
 		ArrayList<Vertex> path = new ArrayList<>();
 		start.setDistStart(0);
 		double distance = calculateDist(start, goal);
 		start.setCost((int)distance);
 		unvisited.add(start);
-		while(!unvisited.isEmpty()) {
-			Vertex current = unvisited.poll();
-			current.markVisited();
-			visited.add(current);
-			if(current == goal) {
-				break;
-			}
-			for(Edge edge: current.getEdges()) {
-				Vertex next = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
-				if(visited.contains(next)) {
-					continue;
+		double step = 25;
+		Thread thread = new Thread(() -> {
+			start.markStart();
+			double currentTime = System.currentTimeMillis();
+			while(!unvisited.isEmpty()) {
+				double elapsed = System.currentTimeMillis() - currentTime;
+				if(elapsed>=step) {
+					currentTime = System.currentTimeMillis();
+					Vertex current = unvisited.poll();
+					if(current!=start) {
+						current.markVisited();
+					}
+					visited.add(current);
+					if(current == goal) {
+						break;
+					}
+					for(Edge edge: current.getEdges()) {
+						Vertex next = grid.getCell(edge.getVertex().getCoordinate()[0], edge.getVertex().getCoordinate()[1]);
+						if(visited.contains(next)) {
+							continue;
+						}
+						double distStart = current.getDistStart()+edge.getCost();
+						double distGoal = calculateDist(next, goal);
+						double estimate = distStart+distGoal;
+						if(!next.isVisited()) {
+							next.markAdj();
+						}
+						if(!unvisited.contains(next)||distStart<next.getDistStart()) {
+							next.setDistStart(distStart);
+							next.setCost((int)estimate);
+							next.setPrevious(current);
+							unvisited.add(next);
+						}
+					}
 				}
-				double distStart = current.getDistStart()+edge.getCost();
-				double distGoal = calculateDist(next, goal);
-				double estimate = distStart+distGoal;
-				if(!next.isVisited()) {
-					next.markAdj();
-				}
-				if(!unvisited.contains(next)||distStart<next.getDistStart()) {
-					next.setDistStart(distStart);
-					next.setCost((int)estimate);
-					next.setPrevious(current);
-					unvisited.add(next);
+			}
+			Vertex current = goal;
+			path.add(current);
+			grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markGoal();
+			while(current.getPrevious()!=null) {
+				path.add(current.getPrevious());
+				current = current.getPrevious();
+				grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markPath();
+				if(current.getPrevious()==null) {
+					grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markStart();
 				}
 			}
-		}
-		Vertex current = goal;
-		path.add(current);
-		grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markGoal();
-		while(current.getPrevious()!=null) {
-			path.add(current.getPrevious());
-			current = current.getPrevious();
-			grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markPath();
-			if(current.getPrevious()==null) {
-				grid.getCell(current.getCoordinate()[0], current.getCoordinate()[1]).markStart();
-			}
-		}
-		System.out.println(path.toString());
+			System.out.println(path.toString());
+		});
+		thread.setDaemon(true);
+		thread.start();
 		return path;
 	}
-	
+
 	double calculateDist(Vertex start, Vertex goal){
 		double x1 = start.getCoordinate()[0];
 		double y1 = start.getCoordinate()[1];
